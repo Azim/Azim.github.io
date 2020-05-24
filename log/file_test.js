@@ -16,7 +16,12 @@ fileSelector.addEventListener('change', (event) => {
 function readLog(file, li){
 	var reader = new FileReader();
 	reader.onload = function(){
-          li.textContent = reader.result.replace("\n","<br>");
+		var lines = reader.result.split("\n");
+		for( const line of lines){
+			const pbreak = document.createElement('p');
+			pbreak.textContent = line;
+			li.appendChild(pbreak);
+		}
     };
 	reader.readAsText(file);
 }
