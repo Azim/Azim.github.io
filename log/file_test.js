@@ -16,7 +16,7 @@ fileSelector.addEventListener('change', (event) => {
 function readLog(file, li){
 	var reader = new FileReader();
 	reader.onload = function(){
-          li.textContent = reader.result;
+          li.textContent = reader.result.replace("\n","<br>");
     };
 	reader.readAsText(file);
 }
