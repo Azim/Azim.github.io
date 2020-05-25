@@ -21,3 +21,15 @@ td:nth-child(3){
 	background-color: #fdf7e3;
 	font-weight:bold;
 }
+
+input{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+.private{
+	display:none;
+}
+#privatetoggle:checked ~ label ~ .private {
+	display: table-row;
+}

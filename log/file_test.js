@@ -47,6 +47,9 @@ function readTextLog(file){
 				index = content.indexOf("] ");
 				content = content.slice(index+1);
 			}
+			if(channel.includes("PRIVATE")){
+				tr.classList.add("private");
+			}
 			fillLine(tr, time, channel, user, content);
 			output.appendChild(tr);
 			continue;
