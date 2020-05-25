@@ -18,6 +18,7 @@ function readTextLog(file){
 			if(line.includes("--- Date")){
 				const td = document.createElement('td');
 				td.colSpan=4;
+				td.classList.add('logStart');
 				index = line.indexOf(" ");
 				td.textContent = line.slice(index);
 				tr.appendChild(td);
