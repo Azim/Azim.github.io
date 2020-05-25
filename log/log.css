@@ -4,3 +4,7 @@ table, th, td {
 td:nth-child(3){
 	width: max-content;
 }
+#chat_log{
+	margin:5%;
+	margin-top:20px;
+}

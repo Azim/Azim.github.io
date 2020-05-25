@@ -2,7 +2,7 @@ const fileSelector = document.getElementById('file-selector');
 const output = document.getElementById('output');
 
 fileSelector.addEventListener('change', (event) => {
-	output.innerHTML = '';
+	//output.innerHTML = '';
 	for (const file of event.target.files) {
 		readTextLog(file);
 	}
@@ -14,25 +14,37 @@ function readTextLog(file){
 		var lines = reader.result.split("\n");
 		for( const line of lines){
 			const tr = document.createElement('tr');
-			
+			var index = 0;
+			if(line.includes("--- Date")){
+				const td = document.createElement('td');
+				td.colSpan=4;
+				index = line.indexOf(" ");
+				td.textContent = line.slice(index);
+				tr.appendChild(td);
+				output.appendChild(tr);
+				continue;
+			}
 			if(!line.includes("|")) continue;
-			var pieces = line.split("| "); //indexOf
+			index = line.indexOf("| ");
+			var pieces = new Array(line.slice(0,index), line.slice(index+2));
 			var time = pieces[0].split(" ")[0];
 			var content = pieces[1];
 			var	user = " ";
+			var channel = " ";
 			if(!line.includes("| <")){ //no channel, print everything
-				channel = "none";
 				fillLine(tr, time, channel, user, content);
 				output.appendChild(tr);
 				continue;
 			}
-			var channel = content.split(">")[0].replace(/ /g,"").replace("<",""); //indexOf
-			console.log(channel);
-			if(channel == "SYSTEM"){ //system channel
-				content = content.split(">")[1];
+			channel = content.split(">")[0].replace("<","").trim();
+			if(channel == "SYSTEM"||channel=="GAMEPLAY"){ //system channel
+				index = content.indexOf(">");
+				content = content.slice(index+1);
 			}else{ //some chat - we have an author
-				user = content.split(">[")[1].split("]")[0]; //indexOf
-				content = content.split("] ")[1];
+				index = content.indexOf(">[");
+				user = content.slice(index+2).split("]")[0];
+				index = content.indexOf("] ");
+				content = content.slice(index+1);
 			}
 			fillLine(tr, time, channel, user, content);
 			output.appendChild(tr);
