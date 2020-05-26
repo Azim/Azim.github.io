@@ -7,13 +7,13 @@
 <body>
 	<div id="chat_log">
 		<input type="file" id="file-selector" multiple accept=".log" value = "Text log">
-		<input type = "checkbox" id="privatetoggle">
+		<input type = "checkbox" id="privatetoggle" onclick="handlePrivateToggle()">
 		<label for="privatetoggle">Show private messages</label>
 		<table id="output" class="result">
 			<tr><th>Time</th><th>Channel</th><th>User</th><th>Content</th></tr>
-			<tr class="private"><td colspan="4">test</td>
 		</table>
 		<script type="text/javascript" src="file_test.js"></script>
+		<script type="text/javascript" src="private_checkbox.js"></script>
 	</div>
 </body>
 </html>

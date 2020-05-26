@@ -7,6 +7,9 @@ th, td{
 table{
 	border-collapse: collapse;
 }
+:root{
+	--privatedisplayst: none;
+}
 
 td:nth-child(3){
 	width: max-content;
@@ -27,9 +30,9 @@ input{
 	margin-bottom:10px;
 }
 
-.private{
-	display:none;
+.privatetoggle:checked {
+	--privatedisplayst: table-row;
 }
-#privatetoggle:checked ~ label ~ .private {
-	display: table-row;
+.private{
+	display:var(--privatedisplayst);
 }
