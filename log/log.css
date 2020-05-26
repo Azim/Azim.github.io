@@ -7,12 +7,9 @@ th, td{
 table{
 	border-collapse: collapse;
 }
-:root{
-	--privatedisplayst: none;
-}
-
-td:nth-child(3){
+td:nth-child(2), td:nth-child(3){
 	width: max-content;
+	white-space: nowrap;
 }
 #chat_log{
 	margin:5%;
@@ -28,11 +25,4 @@ td:nth-child(3){
 input{
 	margin-top:10px;
 	margin-bottom:10px;
-}
-
-.privatetoggle:checked {
-	--privatedisplayst: table-row;
-}
-.private{
-	display:var(--privatedisplayst);
 }
