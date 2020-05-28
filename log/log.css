@@ -26,3 +26,6 @@ input{
 	margin-top:10px;
 	margin-bottom:10px;
 }
+.private{
+	display:none;
+}
