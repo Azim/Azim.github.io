@@ -34,6 +34,7 @@ function readTextLog(file){
 			var channel = " ";
 			if(!line.includes("| <")){ //no channel, print everything
 				fillLine(tr, time, channel, user, content);
+				tr.classList.add("nochannel");
 				output.appendChild(tr);
 				continue;
 			}
@@ -49,6 +50,9 @@ function readTextLog(file){
 			}
 			if(channel.includes("PRIVATE")){
 				tr.classList.add("private");
+			}
+			if(channel.includes("SYSTEM")){
+				tr.classList.add("system");
 			}
 			if(channel.includes("GAMEPLAY")){
 				tr.classList.add("gameplay");

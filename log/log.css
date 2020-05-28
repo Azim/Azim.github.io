@@ -5,6 +5,7 @@ th, td{
 	padding:5px;
 }
 table{
+	margin-top:10px;
 	border-collapse: collapse;
 }
 td:nth-child(2), td:nth-child(3){
@@ -24,8 +25,10 @@ td:nth-child(2), td:nth-child(3){
 
 input{
 	margin-top:10px;
-	margin-bottom:10px;
 }
-.private{
+.private, .gameplay, .system{
 	display:none;
+}
+label{
+	user-select: none;
 }
