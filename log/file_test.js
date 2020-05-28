@@ -50,6 +50,19 @@ function readTextLog(file){
 			if(channel.includes("PRIVATE")){
 				tr.classList.add("private");
 			}
+			if(channel.includes("GAMEPLAY")){
+				tr.classList.add("gameplay");
+			}
+			if(channel.startsWith("custom_game")){
+				tr.classList.add("custom_game");
+			}
+			if(channel.startsWith("team")){
+				tr.classList.add("team");
+			}
+			if(channel.startsWith("clan")){
+				tr.classList.add("clan");
+			}
+			
 			fillLine(tr, time, channel, user, content);
 			output.appendChild(tr);
 			continue;
