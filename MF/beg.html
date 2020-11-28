@@ -1,0 +1,63 @@
+<HTML>
+<!-- dynamicposition.html -->
+<HEAD>
+<TITLE> Динамическое позиционирование  </TITLE>
+<SCRIPT LANGUAGE = "JavaScript">
+   var speed = 5, count = 10;
+   var firstLine = "Интернет-технологии в САПР";
+    function start() 
+   {
+      window.setInterval( "run()",100 );
+   }
+   function run() 
+   {
+      count += speed;
+      if ( ( count % 200 ) == 0 ) {
+         speed *= -1;
+         pText.style.color = ( speed < 0 ) ? "#E0FFFF" : "#20B2AA" ;
+         firstLine = ( speed < 0 ) ?  "ЦИТП РАН" : "ГЭТУ-ЛЭТИ";
+         }
+      pText.style.fontSize = count /3;
+      pText.style.left = count;
+      pText.innerHTML = firstLine + "<BR>  " ;
+    }
+</SCRIPT>
+</HEAD>
+
+<BODY ONLOAD = "start()"
+
+
+ BGCOLOR=MAROON LINK="#0033CC" TOPMARGIN=15 LEFTMARGIN=20>
+<FONT FACE="Verdana, Arial, Helvetica" COLOR=YELLOW SIZE=2>
+<P ID = "pText" STYLE = "position: absolute; left: 0; 
+                         font-family: serif; color: #FFFACD">
+</P>
+
+
+<BR><BR><BR>
+<BR><BR><BR><BR>
+
+
+<IMG SRC ="AUT_0190.JPG" BORDER = "1" HEIGHT ="150"
+ WIDTH = "200"  ALIGN=LEFT ALT  = "Фрактал">
+
+<BR>
+
+<H1 ALIGN=CENTER >МОДЕЛИРОВАНИЕ  СИСТЕМ</H1>
+
+<P>
+<H1 ALIGN=CENTER >   Интернет-технологии в САПР     </H1>
+</P>
+
+<H3>
+<MARQUEE  BEHAVIOR ="scroll"  DIRECTION = "left" >
+САНКТ-ПЕТЕРБУРГСКИЙ ГОСУДАРСТВЕННЫЙ ЭЛЕКТРОТЕХНИЧЕСКИЙ УНИВЕРСИТЕТ - ЦЕНТР ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ В ПРОЕКТИРОВАНИИ РАН
+</MARQUEE>
+</H3>
+
+
+</BODY>
+</HTML>
+
+
+
