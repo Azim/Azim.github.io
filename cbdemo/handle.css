@@ -1,0 +1,35 @@
+table, th, td {
+	border: 1px solid black;
+}
+th, td{
+	padding:5px;
+}
+table{
+	margin-top:10px;
+	border-collapse: collapse;
+}
+td:nth-child(2), td:nth-child(3){
+	width: max-content;
+	white-space: nowrap;
+}
+#menu{
+	margin:20px;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+.logStart{
+	background-color: #fdf7e3;
+	font-weight:bold;
+}
+
+select, input{
+	margin-top:10px;
+}
+label{
+	user-select: none;
+	display:inline; /*inline*/
+}
+#pve, #special, #need-vs{
+	display:none; /*block*/
+}

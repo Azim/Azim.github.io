@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Custom battles UI demo</title>
+	<link rel="stylesheet" href="handle.css">
+</head>
+<body>
+	<div id="menu">
+		<label for="category">Тип боя:</label>
+		<select id="category" name="category"">
+			<option value="pvp">ПвП</option>
+			<option value="pve">ПвЕ</option>
+			<option value="special">Особые сражения</option>
+		</select>
+		<br/>
+		<div id="pvp">
+			<label for="commands">Команды:</label>
+			<select id="commands" name="commands">
+				<option value="free_for_all">Все против всех</option>
+				<option value="3vs3">3 vs 3</option>
+				<option value="4vs4">4 vs 4</option>
+				<option value="6vs6">6 vs 6</option>
+				<option value="8vs8">8 vs 8</option>
+			</select>
+			<br/>
+			<label for="maps">Карта:</label>
+			<select id="maps" name="maps">
+				<option value="1">Кладбище кораблей</option>
+				<option value="2">Фабрика</option>
+				<option value="3">Гнев Хана</option>
+				<option value="4">Кратер</option>
+				<option value="5">Мост</option>
+				<option value="6">Наукоград</option>
+				<option value="7">Химический завод</option>
+				<option value="8">Чистый остров</option>
+				<option value="9">Центральный стадион</option>
+				<option value="10">Рок-Сити</option>
+			</select>
+			<br/>
+			<label for="time">Лимит по времени, мин.:</label>
+			<input type="number" id="time" name="time" min="1" max="20" value="10">
+			<br/>
+			<label for="points">Условие получения очков:</label>
+			<select id="points" name="points">
+				<option value="kills">Убийство игроков</option>
+				<option value="damage">Нанесение урона</option>
+				<option value="baloons">Удержание шариков</option>
+				<option value="goals">Забитие голов</option>
+			</select>
+			<br/>
+			<label for="maxpoints">Лимит очков:</label>
+			<input type="number" id="maxpoints" name="maxpoints" min="1" max="20000" value="10">
+			<br/>
+			<div id="need-ffa">
+				<label for="rounds">Количество раундов:</label>
+				<input type="number" id="rounds" name="rounds" min="1" max="9" value="1">
+				<br/>
+			</div>
+			<div id="need-vs">
+				<label for="vsrounds">Количество раундов (best of):</label>
+				<select id="vsrounds" name="vsrounds">
+					<option value="1">1</option>
+					<option value="3">3</option>
+					<option value="5">5</option>
+					<option value="7">7</option>
+					<option value="9">9</option>
+				</select>
+				<br/>
+			</div>
+			<label for="hitbox">Обший хитбокс:</label>
+			<input type="checkbox" id="hitbox" name="hitbox" value="shared">
+			<br/>
+			<label for="blueprint">Общий чертеж:</label>
+			<select id="blueprint" name="blueprint">
+				<option value="hangar">Из гаража</option>
+				<option value="disabled">Выкл.</option>
+				<option value="scorps">Скорпионы</option>
+				<option value="porks">Дикобразы</option>
+				<option value="etc">и т.д.</option>
+			</select>
+			<br/>
+			<div id="need-hangar">
+				<label for="forbidden">Список запрещенных деталей:</label>
+				<input type="text" id="forbidden" name="forbidden">
+				<br/>
+				<label for="required">Список обязательных деталей:</label>
+				<input type="text" id="required" name="required">
+			</div>
+		</div>
+		<div id="pve">
+			То, что сейчас там под вкладочкой пве
+		</div>
+		<div id="special">
+			То, что сейчас там под вкладочкой особых событий
+		</div>
+	</div>
+	<script type="text/javascript" src="handle.js"></script>
+</body>
+</html>
