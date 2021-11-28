@@ -2,6 +2,7 @@ const category = document.getElementById('category');
 const commands = document.getElementById('commands');
 const blueprint = document.getElementById('blueprint');
 const pve_blueprint = document.getElementById('pve-blueprint');
+const pvp_blueprint = document.getElementById('pvp-blueprint');
 const points = document.getElementById('points');
 const respawn = document.getElementById('allow-respawn');
 const maps = document.getElementById('maps');
@@ -101,6 +102,10 @@ blueprint.addEventListener('change', (event) => {
 pve_blueprint.addEventListener('change', (event) => {
 	hangar = pve_blueprint.value == 'hangar';
 	document.getElementById('pve-need-hangar').style.display = hangar?'block':'none';
+});
+pvp_blueprint.addEventListener('change', (event) => {
+	hangar = pvp_blueprint.value == 'hangar';
+	document.getElementById('pvp-need-hangar').style.display = hangar?'block':'none';
 });
 points.addEventListener('change', (event) => {
 	death = points.value == 'death';
