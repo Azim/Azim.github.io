@@ -11,7 +11,7 @@ label{
 	user-select: none;
 	display:inline; /*inline*/
 }
-#pvp, #pve, #special, #need-vs, #pve-need-hangar, #pvp-need-hangar{
+#pvp, #pve, #special, #need-vs,#need-death, #pve-need-hangar, #pvp-need-hangar{
 	display:none; /*block*/
 }
 #ai_ps_from, #ai_ps_to {

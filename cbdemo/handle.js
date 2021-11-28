@@ -93,6 +93,7 @@ commands.addEventListener('change', (event) => {
 	vs = commands.value != 'free_for_all';
 	document.getElementById('need-vs').style.display = vs?'block':'none';
 	document.getElementById('need-ffa').style.display = vs?'none':'block';
+	document.getElementById('need-death').style.display = (commands.value == 'free_for_all' && points.value == 'death')?'block':'none';
 	updateMaps();
 });
 blueprint.addEventListener('change', (event) => {
@@ -110,6 +111,8 @@ pvp_blueprint.addEventListener('change', (event) => {
 points.addEventListener('change', (event) => {
 	death = points.value == 'death';
 	document.getElementById('need-points').style.display = death?'none':'block';
+	document.getElementById('need-death').style.display = (commands.value == 'free_for_all'&&points.value == 'death')?'block':'none';
+	
 });
 respawn.addEventListener('change', (event) => {
 	document.getElementById('need-respawn').style.display = respawn.checked?'block':'none';
