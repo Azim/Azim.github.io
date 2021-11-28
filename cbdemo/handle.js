@@ -1,101 +1,111 @@
 const category = document.getElementById('category');
 const commands = document.getElementById('commands');
 const blueprint = document.getElementById('blueprint');
+const pve_blueprint = document.getElementById('pve-blueprint');
+const points = document.getElementById('points');
+const respawn = document.getElementById('allow-respawn');
+const maps = document.getElementById('maps');
 
+const custom_maps = {
+	ffa: ['Каньон основателей', 'Мост', 'Кладбище кораблей', 'Кольцо пепла', 'Кратер', 'Наукоград', 'Крепость', 'и прочие подходящие для ксзс карты'],
+	vs: ['Каньон основателей', 'Мост', 'Кладбище кораблей', 'Кольцо пепла', 'ТЭЦ', 'Наукоград', 'и прочие подходящие для vs карты']
+};
+const special_maps = {
+	massacre: ['Заброшеный город','Плацдарм Опустошителей','Химический завод'],
+	football: ['Центральный стадион'],
+	race: ['Скалистая трасса','Скалистая трасса(inverted)','Индустриальная трасса','Индустриальная трасса(inverted)'],
+	battle_royale: ['Кровавые скалы']
+};
+const pve_maps = {
+	long: ['Восточный ретранслятор','Мертвое шоссы','Чертовы рудники'],
+	short: ['Гнев Хана','Каньон основателей','Кладбище кораблей', 'Мост', 'Рок-Сити', 'Старый город', 'ТЭЦ', 'Химический завод']
+};
+const pvp_maps = {
+	assault: ['Кольцо Пепла','Кратер','Крепость','Рок-Сити','Сектор ЕХ','Синто-Сити','Сломанная стрела','Старый город'],
+	capture: ['Кладбище кораблей','Мост','Наукоград','Песчаная долина','Песчаный залив','Станция Котроль-17','ТЭЦ','Фабрика'],
+	control: ['Безымянная башня','Кладбище кораблей','Плацдарм опустошителей','Рок-Сити','Крепость','Химический завод']
+};
+
+function updateMaps(){
+	while (maps.firstChild) {
+        maps.removeChild(maps.firstChild);
+    }
+	let newmaps = [];
+	switch(category.value){
+		case 'custom':
+			if(commands.value == 'free_for_all'){
+				newmaps = custom_maps['ffa'];
+			}else{
+				newmaps = custom_maps['vs'];
+			}
+			break;
+		case 'pvp':
+			switch(document.getElementById('pvp-gamemode').value){
+				case 'assault':
+				case 'assault3':
+					newmaps = pvp_maps['assault'];
+					break;
+				case 'capture':
+				case 'capture3':
+					newmaps = pvp_maps['capture'];
+					break;
+				case 'control':
+					newmaps = pvp_maps['control'];
+					break;
+			}
+			break;
+		case 'pve':
+			switch(document.getElementById('pve-gamemode').value){
+				case 'run':
+				case 'chase':
+				case 'convoy':
+				case 'steal_convoy':
+					newmaps = pve_maps['long'];
+					break;
+				default:
+					newmaps = pve_maps['short'];
+					break;
+			}
+			break;
+		case 'special':
+			newmaps = special_maps[document.getElementById('special-gamemode').value];
+			break;
+	}
+	for(var m of newmaps){
+		var op = document.createElement('option');
+		op.value = m;
+		op.text = m;
+		maps.appendChild(op);
+	}
+}
+
+updateMaps();
 category.addEventListener('change', (event) => {
+	document.getElementById('custom').style.display = 'none';
 	document.getElementById('pvp').style.display = 'none';
 	document.getElementById('pve').style.display = 'none';
 	document.getElementById('special').style.display = 'none';
 	document.getElementById(category.value).style.display = 'block';
+	updateMaps();
 });
 commands.addEventListener('change', (event) => {
 	vs = commands.value != 'free_for_all';
 	document.getElementById('need-vs').style.display = vs?'block':'none';
 	document.getElementById('need-ffa').style.display = vs?'none':'block';
+	updateMaps();
 });
 blueprint.addEventListener('change', (event) => {
 	hangar = blueprint.value == 'hangar';
 	document.getElementById('need-hangar').style.display = hangar?'block':'none';
 });
-
-function readTextLog(file){
-	var reader = new FileReader();
-	reader.onload = function(){
-		var lines = reader.result.split("\n");
-		for( const line of lines){
-			const tr = document.createElement('tr');
-			var index = 0;
-			if(line.includes("--- Date")){
-				const td = document.createElement('td');
-				td.colSpan=4;
-				td.classList.add('logStart');
-				index = line.indexOf(" ");
-				td.textContent = line.slice(index);
-				tr.appendChild(td);
-				output.appendChild(tr);
-				continue;
-			}
-			if(!line.includes("|")) continue;
-			index = line.indexOf("| ");
-			var pieces = new Array(line.slice(0,index), line.slice(index+2));
-			var time = pieces[0].split(" ")[0];
-			var content = pieces[1];
-			var	user = " ";
-			var channel = " ";
-			if(!line.includes("| <")){ //no channel, print everything
-				fillLine(tr, time, channel, user, content);
-				tr.classList.add("nochannel");
-				output.appendChild(tr);
-				continue;
-			}
-			channel = content.split(">")[0].replace("<","").trim();
-			if(channel == "SYSTEM"||channel=="GAMEPLAY"){ //system channel
-				index = content.indexOf(">");
-				content = content.slice(index+1);
-			}else{ //some chat - we have an author
-				index = content.indexOf(">[");
-				user = content.slice(index+2).split("]")[0];
-				index = content.indexOf("] ");
-				content = content.slice(index+1);
-			}
-			if(channel.includes("PRIVATE")){
-				tr.classList.add("private");
-			}
-			if(channel.includes("SYSTEM")){
-				tr.classList.add("system");
-			}
-			if(channel.includes("GAMEPLAY")){
-				tr.classList.add("gameplay");
-			}
-			if(channel.startsWith("custom_game")){
-				tr.classList.add("custom_game");
-			}
-			if(channel.startsWith("team")){
-				tr.classList.add("team");
-			}
-			if(channel.startsWith("clan")){
-				tr.classList.add("clan");
-			}
-			
-			fillLine(tr, time, channel, user, content);
-			output.appendChild(tr);
-			continue;
-		}
-    };
-	reader.readAsText(file);
-}
-
-function fillLine(tr, time, channel, user, content){
-	const td1 = document.createElement('td');
-	td1.textContent = time;
-	tr.appendChild(td1);
-	const td2 = document.createElement('td');
-	td2.textContent = channel;
-	tr.appendChild(td2);
-	const td3 = document.createElement('td');
-	td3.textContent = user;
-	tr.appendChild(td3);
-	const td4 = document.createElement('td');
-	td4.textContent = content;
-	tr.appendChild(td4);
-}
+pve_blueprint.addEventListener('change', (event) => {
+	hangar = pve_blueprint.value == 'hangar';
+	document.getElementById('pve-need-hangar').style.display = hangar?'block':'none';
+});
+points.addEventListener('change', (event) => {
+	death = points.value == 'death';
+	document.getElementById('need-points').style.display = death?'none':'block';
+});
+respawn.addEventListener('change', (event) => {
+	document.getElementById('need-respawn').style.display = respawn.checked?'block':'none';
+});

@@ -8,33 +8,17 @@
 	<div id="menu">
 		<label for="category">Тип боя:</label>
 		<select id="category" name="category"">
+			<option value="custom">Custom</option>
 			<option value="pvp">ПвП</option>
 			<option value="pve">ПвЕ</option>
 			<option value="special">Особые сражения</option>
 		</select>
 		<br/>
-		<div id="pvp">
+		<div id="custom">
 			<label for="commands">Команды:</label>
 			<select id="commands" name="commands">
 				<option value="free_for_all">Все против всех</option>
-				<option value="3vs3">3 vs 3</option>
-				<option value="4vs4">4 vs 4</option>
-				<option value="6vs6">6 vs 6</option>
 				<option value="8vs8">8 vs 8</option>
-			</select>
-			<br/>
-			<label for="maps">Карта:</label>
-			<select id="maps" name="maps">
-				<option value="1">Кладбище кораблей</option>
-				<option value="2">Фабрика</option>
-				<option value="3">Гнев Хана</option>
-				<option value="4">Кратер</option>
-				<option value="5">Мост</option>
-				<option value="6">Наукоград</option>
-				<option value="7">Химический завод</option>
-				<option value="8">Чистый остров</option>
-				<option value="9">Центральный стадион</option>
-				<option value="10">Рок-Сити</option>
 			</select>
 			<br/>
 			<label for="time">Лимит по времени, мин.:</label>
@@ -45,12 +29,22 @@
 				<option value="kills">Убийство игроков</option>
 				<option value="damage">Нанесение урона</option>
 				<option value="baloons">Удержание шариков</option>
-				<option value="goals">Забитие голов</option>
+				<option value="death">Смерть вражеской команды</option>
 			</select>
 			<br/>
-			<label for="maxpoints">Лимит очков:</label>
-			<input type="number" id="maxpoints" name="maxpoints" min="1" max="20000" value="10">
+			<div id="need-points">
+				<label for="maxpoints">Лимит очков (сумма очков команды при 8vs8):</label>
+				<input type="number" id="maxpoints" name="maxpoints" min="1" max="20000" value="10">
+				<br/>
+			</div>
+			<label for="allow-respawn">Возраждать игроков:</label>
+			<input type="checkbox" id="allow-respawn" name="allow-respawn" value="allow-respawn" checked="true">
 			<br/>
+			<div id="need-respawn">
+				<label for="rounds">Время до возрождения, сек.:</label>
+				<input type="number" id="rounds" name="rounds" min="1" max="20" value="3">
+				<br/>
+			</div>
 			<div id="need-ffa">
 				<label for="rounds">Количество раундов:</label>
 				<input type="number" id="rounds" name="rounds" min="1" max="9" value="1">
@@ -87,12 +81,105 @@
 				<input type="text" id="required" name="required">
 			</div>
 		</div>
+		<div id="pvp">
+			<label for="pvp-gamemode">Режим игры:</label>
+			<select id="pvp-gamemode" name="pvp-gamemode" onchange="updateMaps()">
+				<option value="capture">Захват</option>
+				<option value="capture3">Захват(до двух побед)</option>
+				<option value="assault">Встречный бой</option>
+				<option value="assault3">Встречный бой(до двух побед)</option>
+				<option value="control">Контроль</option>
+			</select>
+			<br/>
+			<label for="ai_ps_from">ОМ ИИ бронемобилей:</label>
+			<input type="number" id="ai_ps_from" name="ai_ps_from" min="0"> - <input type="number" id="ai_ps_to" name="ai_ps_to" min="0"> 
+		</div>
 		<div id="pve">
-			То, что сейчас там под вкладочкой пве
+			<label for="pve-gamemode">Режим игры:</label>
+			<select id="pve-gamemode" name="pve-gamemode" onchange="updateMaps()">
+				<option value="run">Бей и беги!</option>
+				<option value="chase">Погоня</option>
+				<option value="war_for_fire">Война за огонь</option>
+				<option value="tower_defense">Оборона рубежа</option>
+				<option value="convoy">Последний конвой</option>
+				<option value="data_theft">Похищение данных</option>
+				<option value="attack">Прорыв периметра</option>
+				<option value="levi">Стальная колыбель</option>
+				<option value="steal_convoy">Угнать за пару минут</option>
+			</select>
+			<br/>
+			<label for="pve-enemies">Противники:</label>
+			<select id="pve-enemies" name="pve-enemies">
+				<option value="lunatics">Бешеные</option>
+				<option value="scavengers">Мусорщики</option>
+				<option value="nomads">Скитальцы</option>
+				<option value="steppen_wolfs">Степные волки</option>
+				<option value="firestarters">Огнепоклонники</option>
+				<option value="dawn_children">Дети рассвета</option>
+			</select>
+			<br/>
+			<label for="pve-difficulty">Сложность:</label>
+			<select id="pve-difficulty" name="pve-difficulty">
+				<option value="easy">Легко</option>
+				<option value="normal">Нормально</option>
+				<option value="hard">Сложно</option>
+			</select>
+			<br/>
+			<label for="pve-blueprint">Общий чертеж:</label>
+			<select id="pve-blueprint" name="pve-blueprint">
+				<option value="hangar">Из гаража</option>
+				<option value="disabled" selected="selected">Выкл.</option>
+				<option value="scorps">Скорпионы</option>
+				<option value="porks">Дикобразы</option>
+				<option value="etc">и т.д.</option>
+			</select>
+			<br/>
+			<div id="pve-need-hangar">
+				<label for="pve-forbidden">Список запрещенных деталей:</label>
+				<input type="text" id="pve-forbidden" name="pve-forbidden">
+				<br/>
+				<label for="required">Список обязательных деталей:</label>
+				<input type="text" id="pve-required" name="pve-required">
+			</div>
 		</div>
 		<div id="special">
-			То, что сейчас там под вкладочкой особых событий
+			<label for="special-gamemode">Режим игры:</label>
+			<select id="special-gamemode" name="special-gamemode" onchange="updateMaps()">
+				<option value="massacre">Бойня</option>
+				<option value="football">Стальной чемпионат</option>
+				<option value="race">Гонка</option>
+				<option value="battle_royale">Королевская битва</option>
+			</select>
 		</div>
+
+		<label for="maps">Карта:</label>
+		<select id="maps" name="maps">
+			<option value="1">Кладбище кораблей</option>
+			<option value="2">Фабрика</option>
+			<option value="3">Гнев Хана</option>
+			<option value="4">Кратер</option>
+			<option value="5">Мост</option>
+			<option value="6">Наукоград</option>
+			<option value="7">Химический завод</option>
+			<option value="8">Чистый остров</option>
+			<option value="9">Рок-Сити</option>
+		</select>
+		<br/>
+		<label for="weather">Погода:</label>
+		<select id="weather" name="weather">
+			<option value="random">Случайная</option>
+			<option value="sunny">Солнечный день</option>
+			<option value="cloudy">Пасмурный день</option>
+			<option value="etc">И т.д.</option>
+		</select>
+		<br/>
+		<label for="region">Регион:</label>
+		<select id="region" name="region">
+			<option value="auto">Авто</option>
+			<option value="ru">Россия</option>
+			<option value="eu">Европа</option>
+			<option value="etc">И т.д.</option>
+		</select>
 	</div>
 	<script type="text/javascript" src="handle.js"></script>
 </body>
