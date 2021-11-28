@@ -97,15 +97,15 @@ commands.addEventListener('change', (event) => {
 	updateMaps();
 });
 blueprint.addEventListener('change', (event) => {
-	hangar = blueprint.value == 'hangar';
+	hangar = blueprint.value == 'disabled';
 	document.getElementById('need-hangar').style.display = hangar?'block':'none';
 });
 pve_blueprint.addEventListener('change', (event) => {
-	hangar = pve_blueprint.value == 'hangar';
+	hangar = pve_blueprint.value == 'disabled';
 	document.getElementById('pve-need-hangar').style.display = hangar?'block':'none';
 });
 pvp_blueprint.addEventListener('change', (event) => {
-	hangar = pvp_blueprint.value == 'hangar';
+	hangar = pvp_blueprint.value == 'disabled';
 	document.getElementById('pvp-need-hangar').style.display = hangar?'block':'none';
 });
 points.addEventListener('change', (event) => {
